@@ -1,11 +1,13 @@
-import './assets/main.css'
+import './assets/main.css';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia'; // Pinia 불러오기
+import App from './App.vue';
+import router from './router';
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+const app = createApp(App);
 
-const app = createApp(App)
+// 앱에 라우터와 피니아(중앙 금고)를 장착합니다.
+app.use(createPinia());
+app.use(router);
 
-app.use(router)
-
-app.mount('#app')
+app.mount('#app');
