@@ -1,38 +1,12 @@
 # final-movie-app
 
-This template should help get you started developing with Vue 3 in Vite.
+## 🛠️ 실행 방법 및 환경 변수 설정
 
-## Recommended IDE Setup
+본 프로젝트는 보안을 위해 **TMDB API Key**를 환경 변수로 관리하고 있으며, `.env` 파일은 깃허브 업로드에서 제외되었습니다. 
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+로컬 환경에서 프로젝트를 정상적으로 실행하려면 아래 과정을 진행해 주세요.
 
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+1. 프로젝트 루트 디렉토리에 `.env` 파일을 생성합니다.
+2. 생성한 `.env` 파일에 다음과 같이 본인의 API Key를 입력합니다:
+   ```ini
+   VITE_TMDB_API_KEY=여기에_발급받은_TMDB_API_KEY_입력
