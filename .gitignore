@@ -37,3 +37,7 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# 환경 변수 파일 숨김
+.env
+.env.local
