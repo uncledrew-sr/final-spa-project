@@ -16,8 +16,6 @@ export const useMovieStore = defineStore('movie', () => {
 
     // [3] Actions: 외부 서버 통신 함수 (async/await 적용)
     const fetchMovies = async () => {
-        // 기존에 로드된 영화 데이터가 있다면 로딩 스피너를 띄우지 않아
-        // 이전 페이지 복귀 시 DOM 높이가 축소되어 스크롤 위치가 유실되는 현상을 방지합니다.
         if (movies.value.length === 0) {
             isLoading.value = true;
         }
@@ -51,7 +49,7 @@ export const useMovieStore = defineStore('movie', () => {
             movies.value = fetchedMovies;
         } catch (error) {
             console.error('API 통신 에러 상세 내역:', error);
-            // 영화 목록이 비어있을 때만 에러 메시지를 노출합니다.
+            // 영화 목록이 비어있을 때만 에러 메시지를 노출
             if (movies.value.length === 0) {
                 errorMessage.value = '영화 데이터를 불러오는 데 실패했습니다. 통신 상태나 API Key를 확인해 주세요.';
             }
