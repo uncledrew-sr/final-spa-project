@@ -1,4 +1,9 @@
 <script setup>
+import { onMounted } from 'vue';
+
+onMounted(() => {
+  document.title = '🍿 NETVUE | 우리만의 영화 리뷰 사이트';
+});
 </script>
 
 <template>

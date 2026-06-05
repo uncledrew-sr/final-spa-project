@@ -6,6 +6,7 @@ const store = useMovieStore();
 
 onMounted(() => {
   store.fetchMovies();
+  document.title = '🍿 국내 극장 화제작 (인기순)';
 });
 </script>
 
@@ -51,6 +52,11 @@ onMounted(() => {
             {{ movie.isFavorite ? '❤️ 찜 해제' : '🤍 찜하기' }}
           </button>
         </div>
+        <RouterLink 
+          :to="`/movies/${movie.id}`"
+          class="stretched-link"
+          :aria-label="`${movie.title} 상세 정보 보기`"
+        ></RouterLink>
       </div>
     </div>
   </main>
@@ -65,7 +71,6 @@ onMounted(() => {
 .error { color: #e74c3c; background-color: #fdeaea; }
 
 .movie-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
-.movie-card { border-radius: 12px; overflow: hidden; background: white; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.2s ease; display: flex; flex-direction: column; }
 .movie-card:hover { transform: translateY(-5px); }
 .poster { width: 100%; height: 380px; object-fit: cover; }
 .poster-placeholder { width: 100%; height: 380px; background-color: #ddd; display: flex; align-items: center; justify-content: center; color: #7f8c8d; font-weight: bold; }
@@ -74,6 +79,42 @@ onMounted(() => {
 .release-date { font-size: 13px; color: #7f8c8d; margin-bottom: 10px; font-weight: 500; }
 .rating { font-weight: bold; color: #f39c12; margin-bottom: 10px; font-size: 16px; }
 .overview { font-size: 13px; color: #555; line-height: 1.4; margin-bottom: 20px; flex-grow: 1; }
-.fav-btn { width: 100%; padding: 12px; cursor: pointer; border: none; background: #ecf0f1; color: #333; border-radius: 8px; font-weight: bold; font-size: 14px; transition: 0.3s; margin-top: auto; }
 .fav-btn.active { background: #ff4757; color: white; }
+
+.movie-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.fav-btn {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 12px;
+  cursor: pointer;
+  border: none;
+  background: #ecf0f1;
+  color: #333;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: 0.3s;
+  margin-top: auto;
+}
+
+.stretched-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
 </style>
