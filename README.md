@@ -2,11 +2,16 @@
 
 ## SPA 실행 방법 및 환경 변수 설정
 
-본 프로젝트는 보안을 위해 **TMDB API Key**를 환경 변수로 관리하고 있으며, `.env` 파일은 깃허브 업로드에서 제외되었습니다. 
+본 프로젝트는 보안을 위해 **TMDB API Key**와 **Groq AI API Key**를 환경 변수로 관리하고 있으며, `.env` 파일은 깃허브 업로드에서 제외되었습니다.
 
 로컬 환경에서 프로젝트를 정상적으로 실행하려면 아래 과정을 진행해 주세요.
 
 1. 프로젝트 루트 디렉토리에 `.env` 파일을 생성합니다.
 2. 생성한 `.env` 파일에 다음과 같이 본인의 API Key를 입력합니다:
-   ```ini
+```ini
    VITE_TMDB_API_KEY=여기에_발급받은_TMDB_API_KEY_입력
+   VITE_AI_API_KEY=여기에_발급받은_GROQ_API_KEY_입력
+```
+
+- TMDB API Key는 [https://www.themoviedb.org](https://www.themoviedb.org) 에서 발급받을 수 있습니다.
+- Groq API Key는 [https://console.groq.com](https://console.groq.com) 에서 발급받을 수 있습니다.
