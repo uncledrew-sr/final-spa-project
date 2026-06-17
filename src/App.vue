@@ -10,7 +10,19 @@
         <nav class="nav-menu">
           <RouterLink to="/" class="nav-item">홈</RouterLink>
           <RouterLink to="/movies" class="nav-item">영화 목록</RouterLink>
+          <RouterLink to="/favorites" class="nav-item">❤️ 찜 목록</RouterLink>
         </nav>
+
+        <!-- 헤더 검색 폼: 입력 후 /search?q= 로 이동 -->
+        <form class="header-search-form" @submit.prevent="goSearch">
+          <input
+            v-model="headerQuery"
+            class="header-search-input"
+            type="text"
+            placeholder="영화 검색..."
+          />
+          <button type="submit" class="header-search-btn">🔍</button>
+        </form>
 
         <div class="header-dashboard">
           <div class="dashboard-badge favorite-count">
@@ -32,33 +44,32 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
-// 전역 비동기 세션 데이터가 들어있는 스토어를 임포트합니다.
+import { ref, computed } from 'vue';
+import { RouterLink, RouterView, useRouter } from 'vue-router';
 import { useMovieStore } from './stores/movieStore';
 
 const store = useMovieStore();
+const router = useRouter();
 
-// [반응형 연산 1] 세션 스토리지 기반 실시간 찜 개수를 계산합니다.
-const totalFavoritesCount = computed(() => {
-  return store.favorites.length;
-});
+// 헤더 검색창 입력값
+const headerQuery = ref('');
 
-// [반응형 연산 2] TMDB vote_average 스펙에 맞춘 평균 평점 실시간 집계 로직입니다.
+// 검색 실행: 입력값을 쿼리로 실어 검색 결과 페이지로 이동
+const goSearch = () => {
+  const keyword = headerQuery.value.trim();
+  if (!keyword) return;
+  router.push({ name: 'search', query: { q: keyword } });
+  headerQuery.value = '';
+};
+
+// 세션 스토리지 기반 실시간 찜 개수
+const totalFavoritesCount = computed(() => store.favorites.length);
+
+// TMDB vote_average 기준 찜 목록 평균 평점
 const averageFavoritesRating = computed(() => {
-  // 방어 코드: 찜 목록이 완전히 비어있을 때 NaN 에러를 뿜지 않도록 0.0을 안전하게 반환합니다.
-  if (store.favorites.length === 0) {
-    return '0.0';
-  }
-
-  // .reduce()를 활용하여 찜한 영화들의 평점 총합을 누적 계산합니다.
-  const totalRatingsSum = store.favorites.reduce((accumulator, movie) => {
-    return accumulator + movie.vote_average;
-  }, 0);
-
-  // 총합을 총 개수로 나누고 소수점 첫째 자리까지 포맷팅합니다.
-  const calculatedAverage = totalRatingsSum / store.favorites.length;
-  return calculatedAverage.toFixed(1);
+  if (store.favorites.length === 0) return '0.0';
+  const sum = store.favorites.reduce((acc, movie) => acc + movie.vote_average, 0);
+  return (sum / store.favorites.length).toFixed(1);
 });
 </script>
 
@@ -75,6 +86,30 @@ const averageFavoritesRating = computed(() => {
 .nav-item { color: #ced5e0; text-decoration: none; font-size: 16px; font-weight: 700; transition: color 0.2s ease; padding: 8px 12px; border-radius: 6px; }
 .nav-item:hover { color: #ffffff; background-color: rgba(255, 255, 255, 0.05); }
 .router-link-active.nav-item { color: #ff4757; background-color: rgba(255, 87, 87, 0.1); }
+
+/* 헤더 검색 폼 */
+.header-search-form { display: flex; align-items: center; gap: 6px; }
+.header-search-input {
+  padding: 8px 16px;
+  border: 1px solid #3f4656;
+  background: #2f3542;
+  color: #fff;
+  border-radius: 30px;
+  font-size: 14px;
+  outline: none;
+  width: 180px;
+  transition: border-color 0.2s, width 0.3s;
+}
+.header-search-input::placeholder { color: #747d8c; }
+.header-search-input:focus { border-color: #ff4757; width: 220px; }
+.header-search-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 6px;
+  line-height: 1;
+}
 
 .header-dashboard { display: flex; gap: 15px; }
 .dashboard-badge { background-color: #2f3542; padding: 10px 16px; border-radius: 30px; display: flex; align-items: center; gap: 8px; border: 1px solid #3f4656; }
